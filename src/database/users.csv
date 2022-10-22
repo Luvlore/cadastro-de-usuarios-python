@@ -1,3 +1,9 @@
 name,gender,email,phone,cpf,birthdate
-Bruna,feminino,bruna@email.com,(12) 9 34567890,12345678900,12/01/2000
-Bruna,feminino,bruna@email.com,(12) 9 34567890,12345678900,12/01/2000
+Bruna,feminino,bruna@email.com,(12) 9 3456-7890,12345678900,12/01/2000
+Bruna,feminino,bruna@email.com,(12) 9 3456-7890,12345678900,12/01/2000
+Bruna,feminino,bruna@gmail.com,(12) 9 3456-7890,12345678900,21/04/2000
+Teka,feminino,teka@email.com,(32) 9 09876-5432,09876543211,11/11/2019
+Margô,feminino,margo@email.com,(32) 9 6457-8392,65483926494,05/05/2018
+Teste,masculino,teste@email.com,(32) 9 5678-4321,23498745610,01/01/2000
+Testa,feminino,testa@test.com,(32) 9 4354-6576,32165498721,03/03/2003
+Pass,masculino,pass@pass.com,(21) 9 0978-6534,89032156743,04/04/2004

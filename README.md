@@ -1,6 +1,6 @@
 # DESAFIO
 
-#### Criar um sistema cadastral de usuários, modular e com armazenamento do dados em arquivo.
+## Criar um sistema cadastral de usuários, modular e com armazenamento do dados em arquivo.
 **Requisitos do sistema:**
 
   1. **Menu principal contendo os itens:**

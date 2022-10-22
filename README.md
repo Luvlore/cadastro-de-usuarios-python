@@ -4,8 +4,8 @@
 **Requisitos do sistema:**
 
   1. [ ] **Menu principal contendo os itens:**
-     * [ ] **imprimir lista de usuários:** imprimir todos registros na tela, não precisa estar formatado.
-     * [ ] **buscar por um usuário:** imprimir o registro do usuário com texto formatado.
+     * [x] **imprimir lista de usuários:** imprimir todos registros na tela, não precisa estar formatado.
+     * [x] **buscar por um usuário:** imprimir o registro do usuário com texto formatado.
      * [ ] **cadastrar um novo usuário:** imprimir o registro do usuário cadastrado na tela e uma mensagem de que o cadastro foi realizado com sucesso.
      * [ ] **remover um usuário:** imprimir o registro do usuário deletado na tela e uma mensagem de que a remoção foi realizada com sucesso.
      * [ ] **atualizar os dados de um usuário:** imprimir o registro do usuário antes e depois da atualização na tela e uma mensagem de que a atualização foi realizada com sucesso.

@@ -1,11 +1,13 @@
 import csv
 
+from utils.clear_screen import clear_screen
 from utils.formatter import formatter
 from utils.validations import validate_email, validate_phone
 
 genders = ['feminino', 'masculino', 'outro']
 
 def find_all():
+  clear_screen()
   with open('src/database/users.csv', 'r') as file:
     users = csv.DictReader(file)
     
@@ -13,15 +15,22 @@ def find_all():
       print(formatter(user))
     
     pass
+  
+  input('')
 
-def find_by_name(name):
+def find_by_name():
+  clear_screen()
   with open('src/database/users.csv', 'r') as file:
+    name = input('Digite o nome: ')
+    
     users = csv.DictReader(file)
     
     print('USUÁRIOS ENCONTRADOS\n')
     for user in users:
       if name.lower() in user['name'].lower():
         print(formatter(user))
+
+  input('')
 
 def create():
   new_user = {'name': '', 'gender': '', 'email': '', 'phone': '', 'cpf': '', 'birthdate': ''}
@@ -79,6 +88,8 @@ def create():
     new_user['cpf']       = input('Digite seu CPF: ')
     new_user['birthdate'] = input('Digite sua data de nascimento: ')
     
+    clear_screen()
+    
     print('\n', formatter(new_user))
     
     resp = ' '
@@ -96,4 +107,3 @@ def create():
           pass
         
         is_create = True
-      

@@ -5,6 +5,7 @@ functions in use by the system
 
 def print_users(data):
     '''print user list'''
+    print(data)
     return 'user list'
 
 
@@ -24,7 +25,7 @@ def remove_user(data, name):
     return 'the new user, sucess/fail message'
 
 
-def atualiza_user(data, name, dado_a_atualizar, valor_atualizado):
+def atualiza_user(data, name, key_to_updated, updated_value):
     '''find by name and updates user'''
     # could find by other keys
     return 'the updated user(before/after), sucess/fail message'

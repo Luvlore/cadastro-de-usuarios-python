@@ -1,6 +1,8 @@
 '''
 menu do sistema
 '''
+from data import data as user_data
+from utils import print_users
 
 n1 = '[1]Imprima a lista de usuários\n'
 n2 = '[2]Busque um usuário pelo nome\n'
@@ -8,17 +10,16 @@ n3 = '[3]Cadastre um novo usuário\n'
 n4 = '[4]Remova um usuário\n'
 n5 = '[5]Atualize um usuário\n'
 bonus = '[6]Estátisticas do sistema\n'
-quit = '[7]Encerrar o sistema\n'
-menu = f'Digite o número da ação a ser realizada:\n{n1}{n2}{n3}{n4}{n5}{bonus}{quit}'
+quit_menu = '[7]Encerrar o sistema\n'
+menu = f'Digite o número da ação a ser realizada:\n{n1}{n2}{n3}{n4}{n5}{bonus}{quit_menu}'
 
 action = input(menu)
 
-data = 'fake'
+data = user_data
 
 while action != '7':
     if action == '1':
-        # print_users(data)
-        print('users data\n')
+        print_users(data)
         action = input(menu)
     elif action == '2':
         name = input('Digite o nome do usuario que deseja buscar: ')

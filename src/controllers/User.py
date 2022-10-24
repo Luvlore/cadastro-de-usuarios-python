@@ -1,18 +1,27 @@
 import csv
 
+from prettytable import PrettyTable
 from utils.clear_screen import clear_screen
 from utils.formatter import formatter
-from utils.validations import validate_email, validate_phone
+from utils.validations import validate_cpf, validate_email, validate_phone
 
 genders = ['feminino', 'masculino', 'outro']
+
+field_names_table = ['Nome', 'Gênero', 'Email', 'Telefone', 'CPF', 'Data de Nascimento']
 
 def find_all():
   clear_screen()
   with open('src/database/users.csv', 'r') as file:
     users = csv.DictReader(file)
     
+    table = PrettyTable()
+    table.title = 'TODOS USUÁRIOS LISTADOS'
+    table.field_names = field_names_table
+    
     for user in users:
-      print(formatter(user))
+      table.add_row(user.values())
+    
+    print(table)
     
     pass
   
@@ -25,10 +34,15 @@ def find_by_name():
     
     users = csv.DictReader(file)
     
-    print('USUÁRIOS ENCONTRADOS\n')
+    table = PrettyTable()
+    table.title = 'USUÁRIOS ENCONTRADOS'
+    table.field_names = field_names_table
+    
     for user in users:
       if name.lower() in user['name'].lower():
-        print(formatter(user))
+        table.add_row(user.values())
+        
+    print(table)
 
   input('')
 
@@ -78,19 +92,31 @@ def create():
         print(err)
     
     while True:
-      try:  
+      try:
         phone = input('Digite seu número de telefone: ')
         new_user['phone'] = validate_phone(phone)
         break
       except Exception:
         print('Formato de telefone inválido!')
       
-    new_user['cpf']       = input('Digite seu CPF: ')
+    while True:
+      try:
+        cpf = input('Digite seu CPF: ')
+        new_user['cpf'] = validate_cpf(cpf)
+      except Exception as err:
+        print(err)
+    
+    
     new_user['birthdate'] = input('Digite sua data de nascimento: ')
     
     clear_screen()
     
-    print('\n', formatter(new_user))
+    table = PrettyTable()
+    table.title = 'USUÁRIO CRIADO'
+    table.field_names = field_names_table
+    table.add_row(new_user.values())
+    
+    print(table)
     
     resp = ' '
     
@@ -99,6 +125,7 @@ def create():
       
       if resp == 'S':
         with open('src/database/users.csv', 'a') as file:
+          
           fieldnames = new_user.keys()
           writer = csv.DictWriter(file, fieldnames)
           

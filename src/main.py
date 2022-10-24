@@ -20,7 +20,6 @@ while True:
     raise ValueError('Digite uma opção válida!')
   
   if int(choice) in list(range(1, len(menu) + 1)):
-  
     for pos, op in enumerate(menu.values()):
       if pos + 1 == int(choice):
         op()

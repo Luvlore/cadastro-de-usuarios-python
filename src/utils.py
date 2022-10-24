@@ -20,12 +20,20 @@ def find_user(data_csv, name):
         for user in users:
             user_list = user.split(',')
             if name in user_list:
-                print(tabulate(data_csv, headers='firstrow'))
+                print(user)
+
+                return True, user
 
 
 def add_user(data_csv, name, gender, email, phone, cpf, birth):
     '''adds a new user'''
-    return 'the new user, sucess/fail message'
+    with open(data_csv, 'a+', encoding='utf-8') as user_csv:
+        user_csv.write(f'{name}, {gender}, {email}, {phone}, {cpf}, {birth}\n')
+
+    bool_value, user = find_user(data_csv, name)
+    if bool_value is True:
+        # return 'the new user, sucess/fail message'
+        return user
 
 
 def remove_user(data_csv, name):

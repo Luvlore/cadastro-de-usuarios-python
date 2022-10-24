@@ -1,8 +1,7 @@
 '''
 menu do sistema
 '''
-from utils import print_users, find_user
-from pprint import pprint
+from utils import print_users, find_user, add_user
 
 n1 = '[1]Imprima a lista de usuários\n'
 n2 = '[2]Busque um usuário pelo nome\n'
@@ -21,10 +20,12 @@ while action != '7':
     if action == '1':
         print_users(data_csv)
         action = input(menu)
+
     elif action == '2':
         name = input('Digite o nome do usuario que deseja buscar: ')
-        pprint(find_user(data_csv, name))
+        find_user(data_csv, name)
         action = input(menu)
+
     elif action == '3':
         print('Dados do novo usuário:\n')
         name = input('nome: ')
@@ -32,15 +33,19 @@ while action != '7':
         email = input('email: ')
         phone = input('phone: ')
         cpf = input('cpf: ')
-        birth = input('data_csv de nascimento: ')
-        # user, message = add_user(data_csv, name, gender, email, phone, cpf, birth)
-        print('new user\n')
+        birth = input('data de nascimento: ')
+
+        # user, message = add_user(data_csv, name, gender, email, phone, cpf,
+        #                          birth)
+        add_user(data_csv, name, gender, email, phone, cpf, birth)
         action = input(menu)
+
     elif action == '4':
         name = input('Digite o nome do usuario que deseja remover: ')
         # user, message = remove_user(data_csv, name)
         print('remove user\n')
         action = input(menu)
+
     elif action == '5':
         name = input('Digite o nome do usuario que deseja atualizar: ')
         print('Digite que item deverá ser atualizado:\n')
@@ -50,6 +55,7 @@ while action != '7':
         # user, message = remove_user(data_csv, name, key_to_updated, updated_value)
         print('updated user\n')
         action = input(menu)
+
     elif action == '6':
         # system_statistics(data_csv)
         print('statistics\n')

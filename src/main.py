@@ -2,6 +2,7 @@
 menu do sistema
 '''
 from utils import print_users, find_user
+from pprint import pprint
 
 n1 = '[1]Imprima a lista de usuários\n'
 n2 = '[2]Busque um usuário pelo nome\n'
@@ -22,7 +23,7 @@ while action != '7':
         action = input(menu)
     elif action == '2':
         name = input('Digite o nome do usuario que deseja buscar: ')
-        print(find_user(data_csv, name))
+        pprint(find_user(data_csv, name))
         action = input(menu)
     elif action == '3':
         print('Dados do novo usuário:\n')

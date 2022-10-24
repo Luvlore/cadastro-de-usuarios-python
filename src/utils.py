@@ -9,12 +9,17 @@ def print_users(data):
         users = user_csv.readlines()
         for user in users:
             print(user)
-    return 'user list'
 
 
 def find_user(data, name):
     '''finds by name and returns user data'''
-    return 'user data'
+    with open(data, 'r', encoding='utf-8') as user_csv:
+        users = user_csv.readlines()
+
+        for user in users:
+            user_list = user.split(',')
+            if name in user_list:
+                return user
 
 
 def add_user(data, name, gender, email, phone, cpf, birth):

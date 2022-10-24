@@ -5,7 +5,10 @@ functions in use by the system
 
 def print_users(data):
     '''print user list'''
-    print(data)
+    for user in data['users']:
+        print(
+            f"{user['name']} | {user['gender']} | {user['email']} | {user['cpf']} | {user['birth']}"
+        )
     return 'user list'
 
 

@@ -5,10 +5,10 @@ functions in use by the system
 
 def print_users(data):
     '''print user list'''
-    for user in data['users']:
-        print(
-            f"{user['name']} | {user['gender']} | {user['email']} | {user['cpf']} | {user['birth']}"
-        )
+    with open(data, 'r', encoding='utf-8') as user_csv:
+        users = user_csv.readlines()
+        for user in users:
+            print(user)
     return 'user list'
 
 

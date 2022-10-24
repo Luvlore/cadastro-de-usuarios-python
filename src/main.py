@@ -1,7 +1,6 @@
 '''
 menu do sistema
 '''
-from data import data as user_data
 from utils import print_users
 
 n1 = '[1]Imprima a lista de usuários\n'
@@ -15,15 +14,15 @@ menu = f'Digite o número da ação a ser realizada:\n{n1}{n2}{n3}{n4}{n5}{bonus
 
 action = input(menu)
 
-data = user_data
+data_csv = 'src/data.csv'
 
 while action != '7':
     if action == '1':
-        print_users(data)
+        print_users(data_csv)
         action = input(menu)
     elif action == '2':
         name = input('Digite o nome do usuario que deseja buscar: ')
-        # find_user(data, name)
+        # find_user(data_csv, name)
         print('find user\n')
         action = input(menu)
     elif action == '3':
@@ -33,13 +32,13 @@ while action != '7':
         email = input('email: ')
         phone = input('phone: ')
         cpf = input('cpf: ')
-        birth = input('data de nascimento: ')
-        # user, message = add_user(data, name, gender, email, phone, cpf, birth)
+        birth = input('data_csv de nascimento: ')
+        # user, message = add_user(data_csv, name, gender, email, phone, cpf, birth)
         print('new user\n')
         action = input(menu)
     elif action == '4':
         name = input('Digite o nome do usuario que deseja remover: ')
-        # user, message = remove_user(data, name)
+        # user, message = remove_user(data_csv, name)
         print('remove user\n')
         action = input(menu)
     elif action == '5':
@@ -48,10 +47,10 @@ while action != '7':
         key_to_updated = input(
             'nome | gênero | email | telefone | cpf | nascimento: ')
         updated_value = input('\ndigite o novo valor: ')
-        # user, message = remove_user(data, name, key_to_updated, updated_value)
+        # user, message = remove_user(data_csv, name, key_to_updated, updated_value)
         print('updated user\n')
         action = input(menu)
     elif action == '6':
-        # system_statistics(data)
+        # system_statistics(data_csv)
         print('statistics\n')
         action = input(menu)

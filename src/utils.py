@@ -84,32 +84,29 @@ def remove_user(users_dict, name):
         print(f'{exp}')
 
 
-def update_user(users_dict, name, key_to_updated, updated_value):
+def update_user(users_dict, name, key_to_update, updated_value):
     '''find by name and updates user'''
     # could find by other keys
     try:
-        user, bool_value = find_user(users_dict, name)
-        fail = 'Usuário não existe\n'
-        success = 'Usuário foi alterado\n'
+        convert_key = {
+            'nome': 'name',
+            'gênero': 'gender',
+            'email': 'gender',
+            'telefone': 'phone',
+            'cpf': 'cpf',
+            'nascimento': 'birth'
+        }
 
-        # preciso converter essas chaves
-        key_entrada = [
-            'nome', 'gênero', 'email', 'telefone', 'cpf', 'nascimento'
-        ]
+        for index, user in enumerate(users_dict):
+            if user['name'] == name:
+                user[convert_key[key_to_update]] = updated_value
+                user_index = index
 
-        if bool_value is False:
-            return None, fail
-        else:
-            for index, user in enumerate(users_dict):
-                if user['name'] == name:
-                    user[key_to_updated] = updated_value
-                    user_index = index
+        dict_to_csv(users_dict)
+        csv = 'src/data.csv'
+        updated_users_dict = csv_to_dict(csv)
 
-            dict_to_csv(users_dict)
-            csv = 'src/data.csv'
-            updated_users_dict = csv_to_dict(csv)
-
-            return updated_users_dict[user_index], success
+        return updated_users_dict[user_index]
 
     except Exception as exp:
         print(f'{exp}')

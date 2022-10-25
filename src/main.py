@@ -25,7 +25,7 @@ while action != '7':
 
     # search for a user
     elif action == '2':
-        name = input('Digite o nome do usuario que deseja buscar: ')
+        name = input('\nDigite o nome do usuario que deseja buscar: ')
         users_dict = csv_to_dict(data_csv)
         user, bool_val = find_user(users_dict, name)
 
@@ -39,13 +39,13 @@ while action != '7':
 
     # add a new user
     elif action == '3':
-        print('Dados do novo usuário:\n')
+        print('\nDados do novo usuário:\n')
         name = input('nome: ')
         gender = input('genero: ')
         email = input('email: ')
         phone = input('phone: ')
         cpf = input('cpf: ')
-        birth = input('data de nascimento: ')
+        birth = input('data de nascimento(dd/mm/aaaa): ')
 
         users_dict = csv_to_dict(data_csv)
         bool_value, message, user = add_user(users_dict, name, gender, email,
@@ -83,24 +83,30 @@ while action != '7':
     # update a user
     elif action == '5':
         name = input('\nDigite o nome do usuario que deseja atualizar: ')
-        print('Digite que item deverá ser atualizado:\n')
-        key_to_updated = input(
-            'nome | gênero | email | telefone | cpf | nascimento: ')
-        updated_value = input('\ndigite o novo valor: ')
-
         users_dict = csv_to_dict(data_csv)
-        user, message = update_user(users_dict, name, key_to_updated,
-                                    updated_value)
 
-        if message == 'Usuário foi alterado\n':
-            print(message)
-            print(
-                f"{user['name']} | {user['gender']} | {user['email']} | {user['cpf']} | {user['birth']}\n"
-            )
+        user, bool_value = find_user(users_dict, name)
+
+        if bool_value == False:
+            print('Usuário não existe\n')
         else:
-            print(
-                'Algo deu errado. Tente novamente ou entre em contato com o suporte.\n'
+            print('Digite que item deverá ser atualizado:')
+            key_to_update = input(
+                'nome | gênero | email | telefone | cpf | nascimento(dd/mm/aaaa):\n'
             )
+            updated_value = input('\ndigite o novo valor: ')
+
+            user = update_user(users_dict, name, key_to_update, updated_value)
+
+            if user:
+                print('Usuário foi alterado\n')
+                print(
+                    f"{user['name']} | {user['gender']} | {user['email']} | {user['cpf']} | {user['birth']}\n"
+                )
+            else:
+                print(
+                    'Algo deu errado. Tente novamente ou entre em contato com o suporte.\n'
+                )
 
         action = input(menu)
 

@@ -1,7 +1,7 @@
 '''
 menu do sistema
 '''
-from utils import print_users, find_user, add_user, remove_user
+from utils import print_users, find_user, add_user, remove_user, update_user
 from helpers import csv_to_dict
 
 n1 = '[1]Imprima a lista de usuários\n'
@@ -18,10 +18,12 @@ action = input(menu)
 data_csv = 'src/data.csv'
 
 while action != '7':
+    # print all users
     if action == '1':
         print_users(data_csv)
         action = input(menu)
 
+    # search for a user
     elif action == '2':
         name = input('Digite o nome do usuario que deseja buscar: ')
         users_dict = csv_to_dict(data_csv)
@@ -35,6 +37,7 @@ while action != '7':
             print('User not found\n')
         action = input(menu)
 
+    # add a new user
     elif action == '3':
         print('Dados do novo usuário:\n')
         name = input('nome: ')
@@ -45,19 +48,20 @@ while action != '7':
         birth = input('data de nascimento: ')
 
         users_dict = csv_to_dict(data_csv)
-        bool_value, message, added_user = add_user(users_dict, name, gender,
-                                                   email, phone, cpf, birth)
+        bool_value, message, user = add_user(users_dict, name, gender, email,
+                                             phone, cpf, birth)
 
         if bool_value == False:
             print(message)
         else:
             print(message)
             print(
-                f"{added_user['name']} | {added_user['gender']} | {added_user['email']} | {added_user['cpf']} | {added_user['birth']}\n"
+                f"{user['name']} | {user['gender']} | {user['email']} | {user['cpf']} | {user['birth']}\n"
             )
 
         action = input(menu)
 
+    # remove a user
     elif action == '4':
         name = input('Digite o nome do usuario que deseja remover: ')
 
@@ -69,18 +73,38 @@ while action != '7':
             print(
                 f"{user['name']} | {user['gender']} | {user['email']} | {user['cpf']} | {user['birth']}\n"
             )
+        else:
+            print(
+                'Algo deu errado. Tente novamente ou entre em contato com o suporte.\n'
+            )
+
         action = input(menu)
 
+    # update a user
     elif action == '5':
-        name = input('Digite o nome do usuario que deseja atualizar: ')
+        name = input('\nDigite o nome do usuario que deseja atualizar: ')
         print('Digite que item deverá ser atualizado:\n')
         key_to_updated = input(
             'nome | gênero | email | telefone | cpf | nascimento: ')
         updated_value = input('\ndigite o novo valor: ')
-        # user, message = remove_user(data_csv, name, key_to_updated, updated_value)
-        print('updated user\n')
+
+        users_dict = csv_to_dict(data_csv)
+        user, message = update_user(users_dict, name, key_to_updated,
+                                    updated_value)
+
+        if message == 'Usuário foi alterado\n':
+            print(message)
+            print(
+                f"{user['name']} | {user['gender']} | {user['email']} | {user['cpf']} | {user['birth']}\n"
+            )
+        else:
+            print(
+                'Algo deu errado. Tente novamente ou entre em contato com o suporte.\n'
+            )
+
         action = input(menu)
 
+    # print system statistics
     elif action == '6':
         # system_statistics(data_csv)
         print('statistics\n')

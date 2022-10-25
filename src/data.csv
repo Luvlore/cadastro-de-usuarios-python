@@ -1,7 +1,6 @@
 name,gender,email,phone,cpf,birth
-fe,male,test@test.org,,222,222
-manu,female,test@test.org,,222,222
-joao,male,4,4,4,4
-helen,female,o,o,o,o
-ceu,female,aaa,aaa,aaa,aaa
-leo,male,eee,eeee,eee,eee
+fe,male,test@test.com,666666,222,222
+manu,female,test@test.com,,222,222
+helen,female,helen@helen.net,o,o,o
+ceu,female,ceu@test.test,aaa,aaa,aaa
+leo,male,test@test.com,555555,eee,eee

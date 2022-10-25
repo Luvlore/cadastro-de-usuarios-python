@@ -68,33 +68,15 @@ def remove_user(users_dict, name):
     '''find by name and removes user'''
     # could find by other keys
     try:
-        bool_value, user = find_user(users_dict, name)
+        user, bool_value = find_user(users_dict, name)
         fail = 'Usuário não existe\n'
         success = 'Usuário foi removido\n'
 
         if bool_value is False:
             return None, fail
         else:
-            with open(data_csv, 'r+', encoding='utf-8') as data_csv_in:
-
-                users_list = data_csv_in.readlines()
-
-                for user in users_list:
-                    user_list = user.split(',')
-                    if name in user_list:
-                        index = users_list.index(user)
-                        del users_list[index]
-                        users_list.insert(
-                            0,
-                            'nome, gênero, email, telefone, cpf, data de nascimento\n'
-                        )
-
-            data_csv_new = open(data_csv, 'w', encoding='utf-8')
-
-            for user in users_list:
-                data_csv_new.write(user)
-
-            data_csv_new.close()
+            users_dict.remove(user)
+            dict_to_csv(users_dict)
 
             return user, success
 

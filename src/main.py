@@ -64,9 +64,11 @@ while action != '7':
         users_dict = csv_to_dict(data_csv)
         user, message = remove_user(users_dict, name)
 
-        if user == None:
+        if message == 'Usuário foi removido\n':
             print(message)
-
+            print(
+                f"{user['name']} | {user['gender']} | {user['email']} | {user['cpf']} | {user['birth']}\n"
+            )
         action = input(menu)
 
     elif action == '5':

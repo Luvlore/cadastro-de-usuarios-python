@@ -1,11 +1,7 @@
 name,gender,email,phone,cpf,birth
 fe,male,test@test.org,,222,222
 manu,female,test@test.org,,222,222
-lina,female\,e,e,e,e
-ju,r,r,r,r,r
 joao,male,4,4,4,4
-joana,female,u,u,u,u
 helen,female,o,o,o,o
-Cris,male,e,e,e,e
 ceu,female,aaa,aaa,aaa,aaa
 leo,male,eee,eeee,eee,eee

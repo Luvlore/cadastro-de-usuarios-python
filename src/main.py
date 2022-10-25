@@ -1,14 +1,15 @@
 from prettytable import PrettyTable
 
-from controllers.User import *
+from controllers.User import create, delete, find_all, find_by_name, update
+from utils.clear_screen import clear_screen
 from utils.validations import validate_phone
 
 menu = {
+  'Criar novo usuário': create,
   'Mostrar todos os usuários': find_all,
   'Encontrar um usuário pelo nome': find_by_name,
-  'Criar novo usuário': create,
-  'Deleter um usuário': delete,
   'Atualizar um usuário': update,
+  'Deleter um usuário': delete,
 }
 
 while True:
@@ -16,11 +17,11 @@ while True:
     table = PrettyTable()
     
     table.title = 'SISTEMA DE GERENCIAMENTO DE USUÁRIOS'
-    table.field_names = ['ID', 'Operação']
+    table.field_names = ['   ', 'Operação']
     
     for pos, op in enumerate(menu.keys()):
-      table.add_row([pos + 1, op])
-    table.add_row([len(menu) + 1, 'Sair'])
+      table.add_row([f'{pos + 1:02}', op])
+    table.add_row([f'{len(menu) + 1:02}', 'Sair'])
 
     clear_screen()
     print(table)

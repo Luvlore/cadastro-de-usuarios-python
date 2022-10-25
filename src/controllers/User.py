@@ -2,10 +2,8 @@ import csv
 
 from prettytable import PrettyTable
 from utils.clear_screen import clear_screen
-from utils.formatter import formatter
-from utils.validations import (validate_birthdate, validate_cpf,
-                               validate_email, validate_gender, validate_name,
-                               validate_phone)
+from utils.finders import find_id, menu_find
+from utils.validations import *
 
 field_names_table = ['ID', 'Nome', 'Gênero', 'Email', 'Telefone', 'CPF', 'Data de Nascimento']
 
@@ -44,33 +42,15 @@ def find_by_name():
       
       users_found = [[pos, *user.values()] for pos, user in enumerate(users) if name.lower() in user['name'].lower()]
       
-      print(len(users_found))
-      
       for user in users_found:
         table.add_row(user)
-          
+      clear_screen()    
       print(table)
       input('Aperte Enter para continuar: ')
       
       pass
   except Exception:
     print('Erro no aqruivo')
-
-def menu_find():
-  find_user = {
-    'Ver lista de todos os usuário': find_all,
-    'Encontrar usuário pelo nome': find_by_name
-  }
-  
-  for pos, op in enumerate(find_user.keys()):    
-    print(f'{pos + 1}: {op}')
-
-  choice = input('O que deseja fazer? ')
-  
-  if int(choice) in list(range(1, len(find_user) + 1)):
-    for pos, op in enumerate(find_user.values()):
-      if pos + 1 == int(choice):
-        op()
 
 def create(id=False, users=False):
   user_update = users[id].split(',') if id else []
@@ -153,17 +133,14 @@ def create(id=False, users=False):
               
           pass
         break
-            
-def find_id(users):
-  id = input('Escolha o usuário que pelo ID: ')
-        
-  if not id.isdigit() or int(id) not in list(range(0, len(users) - 1)):
-    raise ValueError('Digite um ID válido!')
-
-  return int(id)
-
+   
+find_user = {
+  'Ver lista de todos os usuário': find_all,
+  'Encontrar usuário pelo nome': find_by_name
+}
+         
 def delete():
-  menu_find()
+  menu_find(find_user)
   list_updated = []
   user_deleted = ''
   
@@ -181,7 +158,6 @@ def delete():
             user_deleted = user.split(',')[0]
         pass
         
-        
         with open('src/database/users.csv', 'w') as file:
           for user in list_updated:
             file.write(user)
@@ -196,7 +172,7 @@ def delete():
       pass
 
 def update():
-  menu_find()
+  menu_find(find_user)
   
   while True:
    with open('src/database/users.csv', 'r') as file:

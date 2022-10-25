@@ -25,7 +25,7 @@ def find_all():
       input('Aperte Enter tecla para continuar: ')  
       pass
   except Exception:
-    print('Erro nor arquivo')
+    print('Erro no arquivo')
 
 def find_by_name():
   clear_screen()
@@ -44,13 +44,15 @@ def find_by_name():
       
       for user in users_found:
         table.add_row(user)
-      clear_screen()    
+        
+      clear_screen()
+      
       print(table)
       input('Aperte Enter para continuar: ')
       
       pass
   except Exception:
-    print('Erro no aqruivo')
+    print('Erro no arquivo')
 
 def create(id=False, users=False):
   user_update = users[id].split(',') if id else []

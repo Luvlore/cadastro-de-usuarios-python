@@ -21,6 +21,7 @@ while True:
     
     for pos, op in enumerate(menu.keys()):
       table.add_row([f'{pos + 1:02}', op])
+
     table.add_row([f'{len(menu) + 1:02}', 'Sair'])
 
     clear_screen()

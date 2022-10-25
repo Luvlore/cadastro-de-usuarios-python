@@ -67,8 +67,6 @@ def remove_user(data_csv, name):
         if bool_value is False:
             return None, fail
         else:
-            # with open(data_csv, 'r+', encoding='utf-8') as data_csv_in, \
-            #      open('./data_csv_out.csv', 'w', encoding='utf-8') as data_csv_out:
             with open(data_csv, 'r+', encoding='utf-8') as data_csv_in:
 
                 users_list = data_csv_in.readlines()
@@ -79,6 +77,7 @@ def remove_user(data_csv, name):
                         index = users_list.index(user)
                         del users_list[index]
                         users_list.insert(
+                            0,
                             'nome, gênero, email, telefone, cpf, data de nascimento\n'
                         )
 
@@ -89,12 +88,10 @@ def remove_user(data_csv, name):
 
             data_csv_new.close()
 
-            print(users_list)
+            return user, success
 
     except Exception as exp:
         print(f'{exp}')
-
-    return user, 'teste'
 
 
 def atualiza_user(data_csv, name, key_to_updated, updated_value):

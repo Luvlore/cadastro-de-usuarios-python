@@ -3,7 +3,6 @@ menu do sistema
 '''
 from utils import print_users, find_user, add_user, remove_user
 from helpers import csv_to_dict
-from users_data import users_data
 
 n1 = '[1]Imprima a lista de usuários\n'
 n2 = '[2]Busque um usuário pelo nome\n'
@@ -16,7 +15,6 @@ menu = f'Digite o número da ação a ser realizada:\n{n1}{n2}{n3}{n4}{n5}{bonus
 
 action = input(menu)
 
-data_dict = users_data
 data_csv = 'src/data.csv'
 
 while action != '7':
@@ -27,11 +25,11 @@ while action != '7':
     elif action == '2':
         name = input('Digite o nome do usuario que deseja buscar: ')
         users_dict = csv_to_dict(data_csv)
-        index, user, bool_val = find_user(users_dict, name)
+        user, bool_val = find_user(users_dict, name)
 
         if bool_val is True:
             print(
-                f"{user['name']} | {user['gender']} | {user['email']} | {user['cpf']} | {user['birth']}"
+                f"{user['name']} | {user['gender']} | {user['email']} | {user['cpf']} | {user['birth']}\n"
             )
         else:
             print('User not found\n')
@@ -47,21 +45,24 @@ while action != '7':
         birth = input('data de nascimento: ')
 
         users_dict = csv_to_dict(data_csv)
-        user, message = add_user(users_dict, name, gender, email, phone, cpf,
-                                 birth)
-        if user == None:
+        bool_value, message, added_user = add_user(users_dict, name, gender,
+                                                   email, phone, cpf, birth)
+
+        if bool_value == False:
             print(message)
         else:
-            print(
-                f"{user['name']} | {user['gender']} | {user['email']} | {user['cpf']} | {user['birth']}"
-            )
             print(message)
+            print(
+                f"{added_user['name']} | {added_user['gender']} | {added_user['email']} | {added_user['cpf']} | {added_user['birth']}\n"
+            )
 
         action = input(menu)
 
     elif action == '4':
         name = input('Digite o nome do usuario que deseja remover: ')
-        user, message = remove_user(data_csv, name)
+
+        users_dict = csv_to_dict(data_csv)
+        user, message = remove_user(users_dict, name)
 
         if user == None:
             print(message)

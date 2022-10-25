@@ -187,3 +187,18 @@ def update():
       break
     except Exception as err:
       print(err)
+
+def statistics():
+  with open('src/database/users.csv', 'r') as file:
+    all_users = list(csv.DictReader(file))
+    all_females = [user for user in all_users if user['gender'] == gender]
+    all_males = [user for user in all_users if user['gender'] == 'masculino']
+    all_minors = [user for user in all_users if user['birthdate']]
+    all_majors = []
+    all_seniors = []
+    
+    
+    input()
+  return None
+
+statistics()

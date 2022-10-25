@@ -24,12 +24,11 @@ def validate_cpf(cpf):
   return cpf
 
 def validate_birthdate(birthdate):
-  try:
-    datetime.strptime(birthdate, '%d/%m/%Y')
-    print(datetime.year())
-    
-    return birthdate
-  except Exception:
-    print('Formato de data incorreto. Por favor, digite no formato de: DD/MM/AAAA')
+  birthdate_validate = datetime.strptime(birthdate, '%d/%m/%Y')
+  today = datetime.now()
   
-print(validate_birthdate('22/12/2023'))
+  if birthdate_validate > today:
+    raise Exception()
+  
+  return birthdate
+  

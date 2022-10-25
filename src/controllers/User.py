@@ -3,11 +3,12 @@ import csv
 from prettytable import PrettyTable
 from utils.clear_screen import clear_screen
 from utils.formatter import formatter
-from utils.validations import validate_cpf, validate_email, validate_phone
+from utils.validations import (validate_birthdate, validate_cpf,
+                               validate_email, validate_phone)
 
 genders = ['feminino', 'masculino', 'outro']
 
-field_names_table = ['Nome', 'Gênero', 'Email', 'Telefone', 'CPF', 'Data de Nascimento']
+field_names_table = ['ID', 'Nome', 'Gênero', 'Email', 'Telefone', 'CPF', 'Data de Nascimento']
 
 def find_all():
   clear_screen()
@@ -18,8 +19,8 @@ def find_all():
     table.title = 'TODOS USUÁRIOS LISTADOS'
     table.field_names = field_names_table
     
-    for user in users:
-      table.add_row(user.values())
+    for pos, user in enumerate(users):
+      table.add_row([pos, *user.values()])
     
     print(table)
     
@@ -29,6 +30,7 @@ def find_all():
 
 def find_by_name():
   clear_screen()
+  
   with open('src/database/users.csv', 'r') as file:
     name = input('Digite o nome: ')
     
@@ -38,11 +40,12 @@ def find_by_name():
     table.title = 'USUÁRIOS ENCONTRADOS'
     table.field_names = field_names_table
     
-    for user in users:
+    for pos, user in enumerate(users):
       if name.lower() in user['name'].lower():
-        table.add_row(user.values())
+        table.add_row([pos, *user.values()])
         
     print(table)
+    pass
 
   input('')
 
@@ -52,6 +55,8 @@ def create():
   is_create = False
   
   while not is_create:
+    clear_screen()
+    
     print('CRIAÇÃO DE NOVO USUÁRIO')
     
     while True:
@@ -103,21 +108,27 @@ def create():
       try:
         cpf = input('Digite seu CPF: ')
         new_user['cpf'] = validate_cpf(cpf)
+        break
       except Exception as err:
         print(err)
     
-    
-    new_user['birthdate'] = input('Digite sua data de nascimento: ')
+    while True:
+      try:
+        birthdate = input('Digite sua data de nascimento: ')
+        new_user['birthdate'] = validate_birthdate(birthdate)
+        break
+      except Exception:
+        print('Formato de data incorreto ou inválido. Por favor, digite no formato: DD/MM/AAAA')
     
     clear_screen()
     
     table = PrettyTable()
     table.title = 'USUÁRIO CRIADO'
-    table.field_names = field_names_table
+    table.field_names = field_names_table[1:]
     table.add_row(new_user.values())
     
     print(table)
-    
+  
     resp = ' '
     
     while resp not in 'SN':
@@ -134,3 +145,38 @@ def create():
           pass
         
         is_create = True
+
+def delete():
+  find_user = {
+    'Ver lista de todos os usuário': find_all,
+    'Encontrar usuário pelo nome': find_by_name
+  }
+  
+  for pos, op in enumerate(find_user.keys()):    
+    print(f'{pos + 1}: {op}')
+
+  choice = input('O que deseja fazer? ')
+  
+  if not int(choice) or int(choice) not in list(range(1, len(find_user) + 2)):
+    raise ValueError('Digite uma opção válida!')
+  
+  if int(choice) in list(range(1, len(find_user) + 1)):
+    for pos, op in enumerate(find_user.values()):
+      if pos + 1 == int(choice):
+        op()
+  
+  print('Digite 0 para cancelar.')
+  user_to_delete = input('Escolha o usuário que deseja deletar pelo ID: ')
+  
+  with open('src/database/users.csv', 'r') as file:
+    users = csv.DictReader(file)
+    new_users = []
+    
+    for pos, user in enumerate(users):
+      if int(user_to_delete) != pos:
+        new_users.append(user)
+    
+    for user in new_users:
+      fieldnames = user.keys()
+      csv.DictWriter(new_users, fieldnames)
+    print(new_users)

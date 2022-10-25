@@ -5,6 +5,7 @@ menu = {
   'Mostrar todos os usuários': find_all,
   'Encontrar um usuário pelo nome': find_by_name,
   'Cria novo usuário': create,
+  'Delete um usuário': delete
 }
 
 while True:

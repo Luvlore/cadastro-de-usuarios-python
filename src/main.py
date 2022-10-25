@@ -1,7 +1,8 @@
 '''
 menu do sistema
 '''
-from utils import print_users, find_user, add_user, remove_user
+from utils import print_users, add_user, remove_user, csv_to_dict
+from users_data import users_data
 
 n1 = '[1]Imprima a lista de usuários\n'
 n2 = '[2]Busque um usuário pelo nome\n'
@@ -14,6 +15,7 @@ menu = f'Digite o número da ação a ser realizada:\n{n1}{n2}{n3}{n4}{n5}{bonus
 
 action = input(menu)
 
+data_dict = users_data
 data_csv = 'src/data.csv'
 
 while action != '7':
@@ -23,13 +25,14 @@ while action != '7':
 
     elif action == '2':
         name = input('Digite o nome do usuario que deseja buscar: ')
-        bool_val, user = find_user(data_csv, name)
+        csv_to_dict(data_csv, data_dict)
+        # bool_val, user = find_user(data_csv, name)
 
-        if bool_val is True:
-            print(f'{user[0]} | {user[1]} | {user[2]} | {user[3]} | {user[4]}')
-        else:
-            print('User not found\n')
-        action = input(menu)
+        # if bool_val is True:
+        #     print(f'{user[0]} | {user[1]} | {user[2]} | {user[3]} | {user[4]}')
+        # else:
+        #     print('User not found\n')
+        # action = input(menu)
 
     elif action == '3':
         print('Dados do novo usuário:\n')

@@ -103,3 +103,17 @@ def atualiza_user(data_csv, name, key_to_updated, updated_value):
 def system_statistics(data_csv):
     '''prints a formatted text of the system's statistics'''
     return 'statistics'
+
+
+def dict_to_csv(data_csv, data_dict):
+    return
+
+
+def csv_to_dict(data_csv, data_dict):
+    data_users = {'users': []}
+
+    with open(data_csv, 'r') as users:
+        reader = csv.reader(users)
+        data_users['users'] = [{rows[0]: rows[1] for rows in reader}]
+
+    print(data_users)

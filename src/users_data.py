@@ -1,7 +1,7 @@
 '''
 the system data structure?
 '''
-data = {
+users_data = {
     'users': [{
         'name': 'fe',
         'gender': 'male',

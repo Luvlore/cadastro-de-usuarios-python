@@ -1,7 +1,7 @@
 '''
 menu do sistema
 '''
-from utils import print_users, find_user, add_user
+from utils import print_users, find_user, add_user, remove_user
 
 n1 = '[1]Imprima a lista de usuários\n'
 n2 = '[2]Busque um usuário pelo nome\n'
@@ -23,7 +23,12 @@ while action != '7':
 
     elif action == '2':
         name = input('Digite o nome do usuario que deseja buscar: ')
-        find_user(data_csv, name)
+        bool_val, user = find_user(data_csv, name)
+
+        if bool_val is True:
+            print(f'{user[0]} | {user[1]} | {user[2]} | {user[3]} | {user[4]}')
+        else:
+            print('User not found\n')
         action = input(menu)
 
     elif action == '3':
@@ -37,13 +42,23 @@ while action != '7':
 
         # user, message = add_user(data_csv, name, gender, email, phone, cpf,
         #                          birth)
-        add_user(data_csv, name, gender, email, phone, cpf, birth)
+        user, message = add_user(data_csv, name, gender, email, phone, cpf,
+                                 birth)
+        if user == None:
+            print(message)
+        else:
+            print(f'{user[0]} | {user[1]} | {user[2]} | {user[3]} | {user[4]}')
+            print(message)
+
         action = input(menu)
 
     elif action == '4':
         name = input('Digite o nome do usuario que deseja remover: ')
-        # user, message = remove_user(data_csv, name)
-        print('remove user\n')
+        user, message = remove_user(data_csv, name)
+
+        if user == None:
+            print(message)
+
         action = input(menu)
 
     elif action == '5':

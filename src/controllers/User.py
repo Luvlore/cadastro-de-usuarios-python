@@ -7,8 +7,6 @@ from utils.validations import (validate_birthdate, validate_cpf,
                                validate_email, validate_gender, validate_name,
                                validate_phone)
 
-genders = ['feminino', 'masculino', 'outro']
-
 field_names_table = ['ID', 'Nome', 'Gênero', 'Email', 'Telefone', 'CPF', 'Data de Nascimento']
 
 def find_all():
@@ -82,17 +80,16 @@ def create(id=False):
     
     print(f'{"ATUALIZAÇÃO" if id else "CRIAÇÃO"} DE NOVO USUÁRIO')
     
-    new_user['name'] = validate_name()
+    fields_functions = {
+      'name': validate_name,
+      'genders': validate_gender,
+      'email': validate_email,
+      'phone': validate_phone,
+      'birthdate': validate_birthdate,
+    }
     
-    new_user['gender'] = validate_gender(genders)
-        
-    new_user['email'] = validate_email()
-        
-    new_user['phone'] = validate_phone()
-            
-    new_user['cpf'] = validate_cpf()
-    
-    new_user['birthdate'] = validate_birthdate()
+    for pos, (nameOp, func) in enumerate(fields_functions.items()):
+      new_user[nameOp] = func()
     
     clear_screen()
     

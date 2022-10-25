@@ -16,7 +16,9 @@ def validate_name():
     except Exception as err:
       print(err)
 
-def validate_gender(genders):
+def validate_gender():
+  genders = ['feminino', 'masculino', 'outro']
+  
   for pos, gender in enumerate(genders): 
           print(f'{pos + 1:02}: {gender}')
 

@@ -22,7 +22,7 @@ while True:
       table.add_row([pos + 1, op])
     table.add_row([len(menu) + 1, 'Sair'])
 
-    # clear_screen()
+    clear_screen()
     print(table)
     
     choice = input('O que deseja fazer? ')

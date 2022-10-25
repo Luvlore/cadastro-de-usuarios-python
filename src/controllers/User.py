@@ -12,7 +12,6 @@ field_names_table = ['ID', 'Nome', 'Gênero', 'Email', 'Telefone', 'CPF', 'Data 
 def find_all():
   clear_screen()
   try:
-  
     with open('src/database/users.csv', 'r') as file:
       users = csv.DictReader(file)
       
@@ -73,16 +72,25 @@ def menu_find():
       if pos + 1 == int(choice):
         op()
 
-def create(id=False):
-  new_user = {'name': '', 'gender': '', 'email': '', 'phone': '', 'cpf': '', 'birthdate': ''}
+def create(id=False, users=False):
+  user_update = users[id].split(',') if id else []
+  
+  new_user = {
+    'name': user_update[0] if id else '',
+    'gender': user_update[1] if id else '',
+    'email': user_update[2] if id else '',
+    'phone': user_update[3] if id else '',
+    'cpf': user_update[4] if id else '',
+    'birthdate': user_update[5] if id else ''
+  }
   
   fields_functions = {
-    'name': {'name': 'Nome', 'func': validate_name},
-    'gender': {'name': 'Gênero', 'func': validate_gender},
-    'email': {'name': 'Email', 'func': validate_email},
-    'cpf': {'name': 'CPF', 'func': validate_cpf},
-    'phone': {'name': 'Telefone', 'func': validate_phone},
-    'birthdate': {'name': 'Data de Nascimento', 'func': validate_birthdate},
+    'name': {'name': 'o nome', 'func': validate_name},
+    'gender': {'name': 'o gênero', 'func': validate_gender},
+    'email': {'name': 'o email', 'func': validate_email},
+    'cpf': {'name': 'o CPF', 'func': validate_cpf},
+    'phone': {'name': 'o telefone', 'func': validate_phone},
+    'birthdate': {'name': 'a data de nascimento', 'func': validate_birthdate},
   }
   
   while True:
@@ -125,7 +133,7 @@ def create(id=False):
         
           for pos, user in enumerate(users):
             if int(id) + 1 == pos:
-              updated = f"{','.join(list(new_user.values()))}\n"
+              updated = f"{','.join(list(new_user.values()))}"
               list_updated.append(updated)
             else:
               list_updated.append(user)
@@ -152,29 +160,36 @@ def find_id(users):
   if not id.isdigit() or int(id) not in list(range(0, len(users) - 1)):
     raise ValueError('Digite um ID válido!')
 
-  return id
+  return int(id)
 
 def delete():
   menu_find()
   list_updated = []
+  user_deleted = ''
   
   while True:
     with open('src/database/users.csv', 'r') as file:
       users = file.readlines()
+      
       try:
         user_to_delete = find_id(users)
       
         for pos, user in enumerate(users):
           if int(user_to_delete) != pos - 1:
             list_updated.append(user)
+          else:
+            user_deleted = user.split(',')[0]
         pass
-              
+        
+        
         with open('src/database/users.csv', 'w') as file:
           for user in list_updated:
             file.write(user)
           pass
-        break
         
+        input(f'USUÁRIO {user_deleted.upper()} FOI REMOVIDO COM SUCESSO!')
+        
+        break
       except Exception as err:
         print(err)
         
@@ -187,12 +202,10 @@ def update():
    with open('src/database/users.csv', 'r') as file:
     try:
       users = file.readlines()
-      user_to_update = find_id(users)
+      id = find_id(users)
      
-      create(user_to_update)
+      create(id, users[1:])
       
       break
     except Exception as err:
       print(err)
-
-create(2)

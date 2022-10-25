@@ -1,8 +1,9 @@
 '''
-functions in use by the system
+crud functions in use by the system
 '''
 from tabulate import tabulate
 import csv
+from helpers import dict_to_csv
 
 
 def print_users(data_csv):
@@ -15,43 +16,44 @@ def print_users(data_csv):
         print(f'{exp}')
 
 
-def find_user(data_csv, name):
+def find_user(users_dict, name):
     '''finds by name and returns user data_csv'''
     try:
-        with open(data_csv, 'r', encoding='utf-8') as user_csv:
-            users = user_csv.readlines()
-            found_user = []
-
-            for user in users:
-                user_list = user.split(',')
-                if name in user_list:
-                    found_user.append(user_list)
-
-            if len(found_user) > 0:
-                return True, found_user[0]
+        for index, user in enumerate(users_dict):
+            if name == user['name']:
+                return index, user, True
             else:
-                return False, None
+                return None, None, False
+
     except Exception as exp:
         print(f'{exp}')
 
 
-def add_user(data_csv, name, gender, email, phone, cpf, birth):
+def add_user(users_dict, name, gender, email, phone, cpf, birth):
     '''adds a new user'''
     try:
-        with open(data_csv, 'a+', encoding='utf-8') as user_csv:
-            user_csv.write(
-                f'{name}, {gender}, {email}, {phone}, {cpf}, {birth}\n')
+        users_dict.append({
+            'name': name,
+            'gender': gender,
+            'email': email,
+            'phone': phone,
+            'cpf': cpf,
+            'birth': birth
+        })
 
-        bool_value, user = find_user(data_csv, name)
+        # write to csv
+        dict_to_csv(users_dict)
 
-        success = 'O usuário foi adicionado\n'
-        fail = 'O usuário não foi adicionado\n'
+        # index, user, bool_value = find_user(users_dict, name)
 
-        if bool_value is True:
-            # return 'the new user, sucess/fail message'
-            return user, success
-        else:
-            return None, fail
+        # success = 'O usuário foi adicionado\n'
+        # fail = 'O usuário não foi adicionado\n'
+
+        # if bool_value is True:
+        #     # return 'the new user, sucess/fail message'
+        #     return user, success
+        # else:
+        #     return None, fail
     except Exception as exp:
         print(f'{exp}')
 
@@ -103,17 +105,3 @@ def atualiza_user(data_csv, name, key_to_updated, updated_value):
 def system_statistics(data_csv):
     '''prints a formatted text of the system's statistics'''
     return 'statistics'
-
-
-def dict_to_csv(data_csv, data_dict):
-    return
-
-
-def csv_to_dict(data_csv, data_dict):
-    data_users = {'users': []}
-
-    with open(data_csv, 'r') as users:
-        reader = csv.reader(users)
-        data_users['users'] = [{rows[0]: rows[1] for rows in reader}]
-
-    print(data_users)

@@ -1,7 +1,8 @@
 '''
 menu do sistema
 '''
-from utils import print_users, add_user, remove_user, csv_to_dict
+from utils import print_users, find_user, add_user, remove_user
+from helpers import csv_to_dict
 from users_data import users_data
 
 n1 = '[1]Imprima a lista de usuários\n'
@@ -25,14 +26,16 @@ while action != '7':
 
     elif action == '2':
         name = input('Digite o nome do usuario que deseja buscar: ')
-        csv_to_dict(data_csv, data_dict)
-        # bool_val, user = find_user(data_csv, name)
+        users_dict = csv_to_dict(data_csv)
+        index, user, bool_val = find_user(users_dict, name)
 
-        # if bool_val is True:
-        #     print(f'{user[0]} | {user[1]} | {user[2]} | {user[3]} | {user[4]}')
-        # else:
-        #     print('User not found\n')
-        # action = input(menu)
+        if bool_val is True:
+            print(
+                f"{user['name']} | {user['gender']} | {user['email']} | {user['cpf']} | {user['birth']}"
+            )
+        else:
+            print('User not found\n')
+        action = input(menu)
 
     elif action == '3':
         print('Dados do novo usuário:\n')
@@ -43,14 +46,15 @@ while action != '7':
         cpf = input('cpf: ')
         birth = input('data de nascimento: ')
 
-        # user, message = add_user(data_csv, name, gender, email, phone, cpf,
-        #                          birth)
-        user, message = add_user(data_csv, name, gender, email, phone, cpf,
+        users_dict = csv_to_dict(data_csv)
+        user, message = add_user(users_dict, name, gender, email, phone, cpf,
                                  birth)
         if user == None:
             print(message)
         else:
-            print(f'{user[0]} | {user[1]} | {user[2]} | {user[3]} | {user[4]}')
+            print(
+                f"{user['name']} | {user['gender']} | {user['email']} | {user['cpf']} | {user['birth']}"
+            )
             print(message)
 
         action = input(menu)

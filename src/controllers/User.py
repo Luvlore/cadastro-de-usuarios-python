@@ -75,21 +75,32 @@ def menu_find():
 
 def create(id=False):
   new_user = {'name': '', 'gender': '', 'email': '', 'phone': '', 'cpf': '', 'birthdate': ''}
+  
+  fields_functions = {
+    'name': {'name': 'Nome', 'func': validate_name},
+    'gender': {'name': 'Gênero', 'func': validate_gender},
+    'email': {'name': 'Email', 'func': validate_email},
+    'cpf': {'name': 'CPF', 'func': validate_cpf},
+    'phone': {'name': 'Telefone', 'func': validate_phone},
+    'birthdate': {'name': 'Data de Nascimento', 'func': validate_birthdate},
+  }
+  
   while True:
     clear_screen()
     
     print(f'{"ATUALIZAÇÃO" if id else "CRIAÇÃO"} DE NOVO USUÁRIO')
     
-    fields_functions = {
-      'name': validate_name,
-      'genders': validate_gender,
-      'email': validate_email,
-      'phone': validate_phone,
-      'birthdate': validate_birthdate,
-    }
-    
-    for pos, (nameOp, func) in enumerate(fields_functions.items()):
-      new_user[nameOp] = func()
+    for pos, (opKey, op) in enumerate(fields_functions.items()):
+      if id:
+        change = ' '
+        
+        while change not in 'SN':
+          change = input(f'Deseja mudar {op["name"]}? [S/N] ').strip().upper()[0]
+        
+        if change == 'S':
+          new_user[opKey] = op['func']()
+      else:
+        new_user[opKey] = op['func']()
     
     clear_screen()
     
@@ -184,4 +195,4 @@ def update():
     except Exception as err:
       print(err)
 
-create()
+create(2)

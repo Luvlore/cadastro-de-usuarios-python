@@ -2,7 +2,7 @@
 menu do sistema
 '''
 from utils import print_users, find_user, add_user, remove_user, update_user
-from helpers import csv_to_dict, ask_for_user_data
+from helpers import csv_to_dict, ask_for_name, ask_for_gender, ask_for_email, ask_for_phone, ask_for_cpf, ask_for_birth
 
 n1 = '[1]Imprima a lista de usuários\n'
 n2 = '[2]Busque um usuário pelo nome\n'
@@ -25,7 +25,7 @@ while action != '7':
 
     # search for a user
     elif action == '2':
-        name = input('\nDigite o nome do usuario que deseja buscar: ')
+        name = input('\nDigite o nome do usuario que deseja buscar: ').lower()
         users_dict = csv_to_dict(data_csv)
         user, bool_val = find_user(users_dict, name)
 
@@ -40,7 +40,13 @@ while action != '7':
     # add a new user
     elif action == '3':
         print('\nDados do novo usuário:\n')
-        name, gender, email, phone, cpf, birth, result = ask_for_user_data()
+        name, result = ask_for_name()
+        gender, result = ask_for_gender()
+        email, result = ask_for_email()
+        phone, result = ask_for_phone()
+        cpf, result = ask_for_cpf()
+        birth, result = ask_for_birth()
+
         users_dict = csv_to_dict(data_csv)
 
         if result == True:
@@ -61,7 +67,7 @@ while action != '7':
 
     # remove a user
     elif action == '4':
-        name = input('Digite o nome do usuario que deseja remover: ')
+        name = input('Digite o nome do usuario que deseja remover: ').lower()
 
         users_dict = csv_to_dict(data_csv)
         user, message = remove_user(users_dict, name)
@@ -80,7 +86,8 @@ while action != '7':
 
     # update a user
     elif action == '5':
-        name = input('\nDigite o nome do usuario que deseja atualizar: ')
+        name = input(
+            '\nDigite o nome do usuario que deseja atualizar: ').lower()
         users_dict = csv_to_dict(data_csv)
         keys = ['nome', 'gênero', 'email', 'telefone', 'cpf', 'nascimento']
 

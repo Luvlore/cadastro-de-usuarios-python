@@ -39,32 +39,53 @@ def find_last_in_csv(name):
         print(f'{exp}')
 
 
-def ask_for_user_data():
-    name = input('nome: ')
+def ask_for_name():
+    name = input('nome: ').lower()
     if len(name) < 2:
         message = 'Nome inválido\n'
-        return None, None, None, None, None, None, message
+        return None, message
 
-    gender = input('genero: ')
+    return name, True
 
-    email = input('email: ')
 
+def ask_for_gender():
+    gender = input('genero: ').lower()
+    return gender, True
+
+
+def ask_for_email():
+    email = input('email: ').lower()
     regex_email = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
     if not re.fullmatch(regex_email, email):
         message = 'Email inválido\n'
-        return None, None, None, None, None, None, message
+        return None, message
 
+    return email, True
+
+
+def ask_for_phone():
     phone = input('telefone(somente números): ')
     my_number = phonenumbers.parse(phone, 'BR')
     if not phonenumbers.is_valid_number(my_number):
         message = 'Telefone inválido\n'
-        return None, None, None, None, None, None, message
+        return None, message
 
+    return phone, True
+
+
+def ask_for_cpf():
     cpf = input('cpf: ')
+    if len(cpf) != 11:
+        message = 'Cpf inválido\n'
+        return None, message
 
+    return cpf, True
+
+
+def ask_for_birth():
     birth = input('data de nascimento(dd/mm/aaaa): ')
     if len(birth) < 8 or len(birth.split('/')) == 1:
         message = 'Por favor escreva a data neste formato: dd/mm/aaaa\n'
-        return None, None, None, None, None, None, message
+        return None, message
 
-    return name, gender, email, phone, cpf, birth, True
+    return birth, True

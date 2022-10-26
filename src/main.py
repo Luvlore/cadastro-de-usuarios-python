@@ -2,7 +2,7 @@
 menu do sistema
 '''
 from utils import print_users, find_user, add_user, remove_user, update_user
-from helpers import csv_to_dict
+from helpers import csv_to_dict, ask_for_user_data
 
 n1 = '[1]Imprima a lista de usuários\n'
 n2 = '[2]Busque um usuário pelo nome\n'
@@ -40,24 +40,22 @@ while action != '7':
     # add a new user
     elif action == '3':
         print('\nDados do novo usuário:\n')
-        name = input('nome: ')
-        gender = input('genero: ')
-        email = input('email: ')
-        phone = input('phone: ')
-        cpf = input('cpf: ')
-        birth = input('data de nascimento(dd/mm/aaaa): ')
-
+        name, gender, email, phone, cpf, birth, result = ask_for_user_data()
         users_dict = csv_to_dict(data_csv)
-        bool_value, message, user = add_user(users_dict, name, gender, email,
-                                             phone, cpf, birth)
 
-        if bool_value == False:
-            print(message)
+        if result == True:
+            bool_value, message, user = add_user(users_dict, name, gender,
+                                                 email, phone, cpf, birth)
+
+            if bool_value == False:
+                print(message)
+            else:
+                print(message)
+                print(
+                    f"{user['name']} | {user['gender']} | {user['email']} | {user['cpf']} | {user['birth']}\n"
+                )
         else:
-            print(message)
-            print(
-                f"{user['name']} | {user['gender']} | {user['email']} | {user['cpf']} | {user['birth']}\n"
-            )
+            print(result)
 
         action = input(menu)
 

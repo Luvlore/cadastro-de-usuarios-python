@@ -138,6 +138,5 @@ def system_statistics(users_dict):
 
     # get ages
     ages = get_ages(users_dict)
-    count_ages(ages)
 
-    return users_count, gender_count_dict
+    return users_count, gender_count_dict, ages

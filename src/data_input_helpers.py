@@ -57,18 +57,23 @@ def ask_for_cpf():
 def ask_for_birth():
     birth = input('\ndata de nascimento(dd/mm/aaaa): ')
 
+    if len(birth) < 8 or len(birth.split('/')) == 1:
+        message = 'Formato Incorreto. Por favor escreva a data neste formato: dd/mm/aaaa\n'
+        return None, message
+
     birth_list = birth.split('/')
     day = int(birth_list[0])
     month = int(birth_list[1])
     year = int(birth_list[2])
 
+    if month > 12:
+        message = 'Por favor digite um mês válido.\n'
+        return None, message
+
     date_birth = datetime.date(year, month, day)
     date_today = datetime.date.today()
 
-    if len(birth) < 8 or len(birth.split('/')) == 1:
-        message = 'Formato Incorreto. Por favor escreva a data neste formato: dd/mm/aaaa\n'
-        return None, message
-    elif date_birth > date_today:
+    if date_birth > date_today:
         message = 'Por favor digite uma data anterior à atual.\n'
         return None, message
     elif year < 1894:
@@ -130,4 +135,23 @@ def get_ages(users_dict):
 
 
 def count_ages(ages):
-    return 'grupos?'
+    # up to 18
+    group_1 = []
+    # 18 - 35
+    group_2 = []
+    # 35 - 65
+    group_3 = []
+    # over 65
+    group_4 = []
+
+    for age in ages:
+        if age < 18:
+            group_1.append(age)
+        elif age > 18 and age < 35:
+            group_2.append(age)
+        elif age > 35 and age < 65:
+            group_3.append(age)
+        else:
+            group_4.append(age)
+
+    return group_1, group_2, group_3, group_4

@@ -3,7 +3,7 @@ menu do sistema
 '''
 from utils import print_users, find_user, add_user, remove_user, update_user, system_statistics
 from csv_helpers import csv_to_dict
-from data_input_helpers import ask_for_name, ask_for_gender, ask_for_email, ask_for_phone, ask_for_cpf, ask_for_birth, check_key_before_asking
+from data_input_helpers import ask_for_name, ask_for_gender, ask_for_email, ask_for_phone, ask_for_cpf, ask_for_birth, check_key_before_asking, count_ages
 
 n1 = '[1]Imprima a lista de usuários\n'
 n2 = '[2]Busque um usuário pelo nome\n'
@@ -148,13 +148,18 @@ while action != '7':
     # print system statistics
     elif action == '6':
         users_dict = csv_to_dict(data_csv)
-        users_count, gender_count_dict = system_statistics(users_dict)
+        users_count, gender_count_dict, ages = system_statistics(users_dict)
 
-        print(f'Total de usuários cadastrados: {users_count}\n')
+        print(f'\nTotal de usuários cadastrados: {users_count}\n')
 
-        print('Usuários por gênero:\n')
+        print('Usuários por gênero:')
         for gender in gender_count_dict:
             print(f'{gender}: {gender_count_dict[gender]}')
-        print('\n')
+
+        group_1, group_2, group_3, group_4 = count_ages(ages)
+        print(f'\nUsúarios até 18 anos: {len(group_1)}')
+        print(f'Usúarios de 18 a 35 anos: {len(group_2)}')
+        print(f'Usúarios de 35 a 65 anos: {len(group_3)}')
+        print(f'Usúarios com mais de 65 anos: {len(group_4)}\n')
 
         action = input(menu)

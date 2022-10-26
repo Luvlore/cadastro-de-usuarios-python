@@ -4,7 +4,9 @@ from prettytable import PrettyTable
 from utils.clear_screen import clear_screen
 from utils.finders import find_id, menu_find
 from utils.validations import *
+from utils.verify_age import verify_age
 
+table = PrettyTable()
 field_names_table = ['ID', 'Nome', 'Gênero', 'Email', 'Telefone', 'CPF', 'Data de Nascimento']
 
 def find_all():
@@ -13,7 +15,6 @@ def find_all():
     with open('src/database/users.csv', 'r') as file:
       users = csv.DictReader(file)
       
-      table = PrettyTable()
       table.title = 'TODOS USUÁRIOS LISTADOS'
       table.field_names = field_names_table
       
@@ -36,7 +37,6 @@ def find_by_name():
       
       users = csv.DictReader(file)
       
-      table = PrettyTable()
       table.title = f'RESULTADOS PARA {name.upper()}'
       table.field_names = field_names_table
       
@@ -94,7 +94,6 @@ def create(id=False, users=False):
     
     clear_screen()
     
-    table = PrettyTable()
     table.title = f'USUÁRIO {"ATUALIZADO" if id else "CRIADO"}'
     table.field_names = field_names_table[1:]
     table.add_row(new_user.values())
@@ -191,14 +190,48 @@ def update():
 def statistics():
   with open('src/database/users.csv', 'r') as file:
     all_users = list(csv.DictReader(file))
-    all_females = [user for user in all_users if user['gender'] == gender]
-    all_males = [user for user in all_users if user['gender'] == 'masculino']
-    all_minors = [user for user in all_users if user['birthdate']]
-    all_majors = []
-    all_seniors = []
     
+    statistics_dict = {
+      'all': {
+        'title': 'Todos os usuários',
+        'quantity': len(all_users)
+      },
+      'females': {
+        'title': 'Mulheres',
+        'quantity': len([user for user in all_users if user['gender'] == 'feminino'])
+      },
+      'males': {
+        'title': 'Homens',
+        'quantity': len([user for user in all_users if user['gender'] == 'masculino'])
+      },
+      'others': {
+        'title': 'Outros',
+        'quantity': len([user for user in all_users if user['gender'] == 'outro'])
+      },
+      'minors': {
+        'title': 'Menores de 18 anos',
+        'quantity': len([user for user in all_users if verify_age(user['birthdate']) == 'minor'])
+      },
+      'youngs': {
+        'title': 'Entre 18 anos a 35 anos',
+        'quantity': len([user for user in all_users if verify_age(user['birthdate']) == 'young'])
+      },
+      'majors': {
+        'title': 'Entre 35 anos a 65 anos',
+        'quantity': len([user for user in all_users if verify_age(user['birthdate']) == 'major'])
+      },
+      'elders': {
+        'title': 'Maiores que 65 anos',
+        'quantity': len([user for user in all_users if verify_age(user['birthdate']) == 'elder'])
+      },
+    }
     
+    table.title = 'ESTATÍSTICAS DOS USUÁRIOS'
+    table.field_names = ['Tipo', 'Quantidade']
+    
+    for statistic in statistics_dict.values():
+      table.add_row([statistic['title'], statistic['quantity']])
+      
+    print(table)
     input()
-  return None
-
-statistics()
+    pass

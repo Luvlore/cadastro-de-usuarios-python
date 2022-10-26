@@ -1,6 +1,7 @@
 from prettytable import PrettyTable
 
-from controllers.User import create, delete, find_all, find_by_name, update
+from controllers.User import (create, delete, find_all, find_by_name,
+                              statistics, update)
 from utils.clear_screen import clear_screen
 from utils.validations import validate_phone
 
@@ -10,6 +11,7 @@ menu = {
   'Encontrar um usuário pelo nome': find_by_name,
   'Atualizar um usuário': update,
   'Deleter um usuário': delete,
+  'Estatísticas dos usuários': statistics
 }
 
 while True:

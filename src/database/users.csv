@@ -1,5 +1,18 @@
 name,gender,email,phone,cpf,birthdate
 Bruna,feminino,bruna@gmail.com,(12) 9 3456-7890,12345678900,21/04/2000
-Teka,feminino,teka@email.com,(32) 9 9876-5432,09876543211,11/11/2019
-Margô,feminino,margo@email.com,(09) 9 8765-4321,60807776068,14/08/2018
-Marcos,masculino,marcos@email.com,(12) 9 3456-7890,55366864968,21/04/2003
+Lena,feminino,bruna@gmail.com,(12) 9 3456-7890,12345678900,21/04/1999
+Elena,feminino,bruna@gmail.com,(12) 9 3456-7890,12345678900,21/04/1989
+Gabriela,feminino,teka@email.com,(32) 9 9876-5432,09876543211,11/11/2019
+Amanda,feminino,teka@email.com,(32) 9 9876-5432,09876543211,11/11/2019
+Joana,feminino,teka@email.com,(32) 9 9876-5432,09876543211,11/11/2020
+Margô,feminino,margo@email.com,(09) 9 8765-4321,60807776068,14/08/2008
+Maria,feminino,margo@email.com,(09) 9 8765-4321,60807776068,14/08/2005
+Ana,feminino,margo@email.com,(09) 9 8765-4321,60807776068,14/08/1990
+Mario,masculino,marcos@email.com,(12) 9 3456-7890,55366864968,21/04/1975
+Gabriel,masculino,marcos@email.com,(12) 9 3456-7890,55366864968,21/04/1977
+Leonardo,masculino,marcos@email.com,(12) 9 3456-7890,55366864968,21/04/2010
+João,masculino,marcos@email.com,(12) 9 3456-7890,55366864968,21/04/1956
+Aaron,masculino,marcos@email.com,(12) 9 3456-7890,55366864968,21/04/1980
+João,masculino,marcos@email.com,(12) 9 3456-7890,55366864968,21/04/1940
+Dante,masculino,marcos@email.com,(12) 9 3456-7890,55366864968,21/04/1986
+Eduardo,masculino,marcos@email.com,(12) 9 3456-7890,55366864968,21/04/1965

@@ -4,6 +4,7 @@ crud functions in use by the system
 from tabulate import tabulate
 import csv
 from csv_helpers import dict_to_csv, find_last_in_csv, csv_to_dict
+from collections import Counter
 
 
 def print_users(data_csv):
@@ -27,8 +28,8 @@ def find_user(users_dict, name):
 
         if len(user_exists) == 0:
             return None, False
-        elif len(user_exists) == 1:
-            return user_exists[0], True
+        elif len(user_exists) > 0:
+            return user_exists, True
         # elif len(user_exists) > 1:
         # how to return for multiple found users?
 
@@ -75,8 +76,14 @@ def remove_user(users_dict, name):
         if bool_value is False:
             return None, fail
         else:
-            users_dict.remove(user)
-            dict_to_csv(users_dict)
+            if len(user) > 1:
+                print('Remoção de múltiplos usuários a ser implementada')
+                return None, fail
+            else:
+                user = user[0]
+
+                users_dict.remove(user)
+                dict_to_csv(users_dict)
 
             return user, success
 
@@ -116,6 +123,14 @@ def update_user(users_dict, name, key_to_update, updated_value):
     # return 'the updated user(before/after), sucess/fail message'
 
 
-def system_statistics(data_csv):
+def system_statistics(users_dict):
     '''prints a formatted text of the system's statistics'''
-    return 'statistics'
+    users_count = len(users_dict)
+    gender = []
+
+    for user in users_dict:
+        gender.append(user['gender'])
+
+    gender_count_dict = Counter(gender)
+
+    return users_count, gender_count_dict

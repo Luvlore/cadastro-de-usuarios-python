@@ -1,7 +1,7 @@
 '''
 menu do sistema
 '''
-from utils import print_users, find_user, add_user, remove_user, update_user
+from utils import print_users, find_user, add_user, remove_user, update_user, system_statistics
 from csv_helpers import csv_to_dict
 from data_input_helpers import ask_for_name, ask_for_gender, ask_for_email, ask_for_phone, ask_for_cpf, ask_for_birth, check_key_before_asking
 
@@ -28,12 +28,13 @@ while action != '7':
     elif action == '2':
         name = input('\nDigite o nome do usuario que deseja buscar: ').lower()
         users_dict = csv_to_dict(data_csv)
-        user, bool_val = find_user(users_dict, name)
+        users, bool_val = find_user(users_dict, name)
 
         if bool_val is True:
-            print(
-                f"{user['name']} | {user['gender']} | {user['email']} | {user['phone']} |{user['cpf']} | {user['birth']}\n"
-            )
+            for user in users:
+                print(
+                    f"{user['name']} | {user['gender']} | {user['email']} | {user['phone']} |{user['cpf']} | {user['birth']}\n"
+                )
         else:
             print('Usuário não existe\n')
         action = input(menu)
@@ -109,37 +110,50 @@ while action != '7':
 
         user, bool_value = find_user(users_dict, name)
 
-        if bool_value == False:
-            print('Usuário não existe\n')
+        if len(user) > 1:
+            print('Edição de múltiplos usuários a ser implementada\n')
         else:
-            print('Digite que item deverá ser atualizado:')
-            key_to_update = input(
-                f'{keys[0]} | {keys[1]} | {keys[2]} | {keys[3]} | {keys[4]} | {keys[5]}:\n'
-            )
+            user = user[0]
 
-            updated_value, message = check_key_before_asking(
-                key_to_update, keys)
+            if bool_value == False:
+                print('Usuário não existe\n')
+            else:
+                print('Digite que item deverá ser atualizado:')
+                key_to_update = input(
+                    f'{keys[0]} | {keys[1]} | {keys[2]} | {keys[3]} | {keys[4]} | {keys[5]}:\n'
+                )
 
-            if updated_value == None:
-                print(message)
-            elif updated_value != None:
-                user, converted_key = update_user(users_dict, name,
-                                                  key_to_update, updated_value)
+                updated_value, message = check_key_before_asking(
+                    key_to_update, keys)
 
-                if user[converted_key] == updated_value:
-                    print('Usuário foi alterado\n')
-                    print(
-                        f"{user['name']} | {user['gender']} | {user['email']} | {user['cpf']} | {user['birth']}\n"
-                    )
-                else:
-                    print(
-                        'Algo deu errado. Tente novamente ou entre em contato com o suporte.\n'
-                    )
+                if updated_value == None:
+                    print(message)
+                elif updated_value != None:
+                    user, converted_key = update_user(users_dict, name,
+                                                      key_to_update,
+                                                      updated_value)
+
+                    if user[converted_key] == updated_value:
+                        print('Usuário foi alterado\n')
+                        print(
+                            f"{user['name']} | {user['gender']} | {user['email']} | {user['cpf']} | {user['birth']}\n"
+                        )
+                    else:
+                        print(
+                            'Algo deu errado. Tente novamente ou entre em contato com o suporte.\n'
+                        )
 
         action = input(menu)
 
     # print system statistics
     elif action == '6':
-        # system_statistics(data_csv)
-        print('statistics\n')
+        users_dict = csv_to_dict(data_csv)
+        users_count, gender_count_dict = system_statistics(users_dict)
+
+        print(f'Total de usuários cadastrados: {users_count}\n')
+
+        for gender in gender_count_dict:
+            print(f'{gender}: {gender_count_dict[gender]}')
+        print('\n')
+
         action = input(menu)

@@ -84,6 +84,7 @@ while action != '7':
     elif action == '5':
         name = input('\nDigite o nome do usuario que deseja atualizar: ')
         users_dict = csv_to_dict(data_csv)
+        keys = ['nome', 'gênero', 'email', 'telefone', 'cpf', 'nascimento']
 
         user, bool_value = find_user(users_dict, name)
 
@@ -92,21 +93,26 @@ while action != '7':
         else:
             print('Digite que item deverá ser atualizado:')
             key_to_update = input(
-                'nome | gênero | email | telefone | cpf | nascimento(dd/mm/aaaa):\n'
+                f'{keys[0]} | {keys[1]} | {keys[2]} | {keys[3]} | {keys[4]} | {keys[5]}(dd/mm/aaaa):\n'
             )
-            updated_value = input('\ndigite o novo valor: ')
 
-            user = update_user(users_dict, name, key_to_update, updated_value)
+            if key_to_update in keys:
+                updated_value = input('\ndigite o novo valor: ')
 
-            if user:
-                print('Usuário foi alterado\n')
-                print(
-                    f"{user['name']} | {user['gender']} | {user['email']} | {user['cpf']} | {user['birth']}\n"
-                )
+                user = update_user(users_dict, name, key_to_update,
+                                   updated_value)
+
+                if user:
+                    print('Usuário foi alterado\n')
+                    print(
+                        f"{user['name']} | {user['gender']} | {user['email']} | {user['cpf']} | {user['birth']}\n"
+                    )
+                else:
+                    print(
+                        'Algo deu errado. Tente novamente ou entre em contato com o suporte.\n'
+                    )
             else:
-                print(
-                    'Algo deu errado. Tente novamente ou entre em contato com o suporte.\n'
-                )
+                print('Item não existe, ou foi digitado incorretamente.\n')
 
         action = input(menu)
 

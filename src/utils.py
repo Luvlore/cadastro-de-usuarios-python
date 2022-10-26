@@ -97,16 +97,19 @@ def update_user(users_dict, name, key_to_update, updated_value):
             'nascimento': 'birth'
         }
 
-        for index, user in enumerate(users_dict):
-            if user['name'] == name:
-                user[convert_key[key_to_update]] = updated_value
-                user_index = index
+        if key_to_update in convert_key:
+            for index, user in enumerate(users_dict):
+                if user['name'] == name:
+                    user[convert_key[key_to_update]] = updated_value
+                    user_index = index
 
-        dict_to_csv(users_dict)
-        csv = 'src/data.csv'
-        updated_users_dict = csv_to_dict(csv)
+            dict_to_csv(users_dict)
+            csv = 'src/data.csv'
+            updated_users_dict = csv_to_dict(csv)
 
-        return updated_users_dict[user_index]
+            return updated_users_dict[user_index]
+        else:
+            return None
 
     except Exception as exp:
         print(f'{exp}')

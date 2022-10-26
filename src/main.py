@@ -3,7 +3,6 @@ from prettytable import PrettyTable
 from controllers.User import (create, delete, find_all, find_by_name,
                               statistics, update)
 from utils.clear_screen import clear_screen
-from utils.validations import validate_phone
 
 menu = {
   'Criar novo usuário': create,

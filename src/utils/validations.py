@@ -59,7 +59,7 @@ def validate_phone():
       if not choice.isdigit() or int(choice) not in list(range(1, 3)):
         raise Exception('Opção inválida')
       
-      type_chosen = types[int(choice)]
+      type_chosen = types[int(choice) + 1]
       break
     except Exception as err:
       print(err)

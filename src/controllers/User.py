@@ -6,7 +6,6 @@ from utils.finders import find_id, menu_find
 from utils.validations import *
 from utils.verify_age import verify_age
 
-table = PrettyTable()
 field_names_table = ['ID', 'Nome', 'Gênero', 'Email', 'Telefone', 'CPF', 'Data de Nascimento']
 
 def find_all():
@@ -15,6 +14,7 @@ def find_all():
     with open('src/database/users.csv', 'r') as file:
       users = csv.DictReader(file)
       
+      table = PrettyTable()
       table.title = 'TODOS USUÁRIOS LISTADOS'
       table.field_names = field_names_table
       
@@ -37,6 +37,7 @@ def find_by_name():
       
       users = csv.DictReader(file)
       
+      table = PrettyTable()
       table.title = f'RESULTADOS PARA {name.upper()}'
       table.field_names = field_names_table
       
@@ -54,47 +55,47 @@ def find_by_name():
   except Exception:
     print('Erro no arquivo')
 
-def create(id=False, users=False):
-  user_update = users[id].split(',') if id else []
-  
+def create(id=False, user_update=False):  
   new_user = {
-    'name': user_update[0] if id else '',
-    'gender': user_update[1] if id else '',
-    'email': user_update[2] if id else '',
-    'phone': user_update[3] if id else '',
-    'cpf': user_update[4] if id else '',
-    'birthdate': user_update[5] if id else ''
+    'name': user_update.split(',')[0] if user_update else '',
+    'gender': user_update.split(',')[1] if user_update else '',
+    'email': user_update.split(',')[2] if user_update else '',
+    'phone': user_update.split(',')[3] if user_update else '',
+    'cpf': user_update.split(',')[4] if user_update else '',
+    'birthdate': user_update.split(',')[5] if user_update else ''
   }
   
   fields_functions = {
-    'name': {'name': 'o nome', 'func': validate_name},
-    'gender': {'name': 'o gênero', 'func': validate_gender},
-    'email': {'name': 'o email', 'func': validate_email},
-    'cpf': {'name': 'o CPF', 'func': validate_cpf},
-    'phone': {'name': 'o telefone', 'func': validate_phone},
-    'birthdate': {'name': 'a data de nascimento', 'func': validate_birthdate},
+    'name': {'title': 'o nome', 'func': validate_name},
+    'gender': {'title': 'o gênero', 'func': validate_gender},
+    'email': {'title': 'o email', 'func': validate_email},
+    'cpf': {'title': 'o CPF', 'func': validate_cpf},
+    'phone': {'title': 'o telefone', 'func': validate_phone},
+    'birthdate': {'title': 'a data de nascimento', 'func': validate_birthdate},
   }
   
   while True:
     clear_screen()
     
-    print(f'{"ATUALIZAÇÃO" if id else "CRIAÇÃO"} DE NOVO USUÁRIO')
+    print(f'{"ATUALIZAÇÃO" if user_update else "CRIAÇÃO"} DE NOVO USUÁRIO')
     
     for pos, (opKey, op) in enumerate(fields_functions.items()):
-      if id:
+      if user_update:
         change = ' '
         
         while change not in 'SN':
-          change = input(f'Deseja mudar {op["name"]}? [S/N] ').strip().upper()[0]
+          change = input(f'Deseja mudar {op["title"]}? [S/N] ').strip().upper()[0]
         
         if change == 'S':
           new_user[opKey] = op['func']()
       else:
         new_user[opKey] = op['func']()
     
+    
     clear_screen()
     
-    table.title = f'USUÁRIO {"ATUALIZADO" if id else "CRIADO"}'
+    table = PrettyTable()
+    table.title = f'USUÁRIO {"ATUALIZADO" if user_update else "CRIADO"}'
     table.field_names = field_names_table[1:]
     table.add_row(new_user.values())
     
@@ -106,15 +107,16 @@ def create(id=False, users=False):
       resp = input('As informações conferem? ').strip().upper()[0]
       
     if resp == 'S':
-      if id:
+      if user_update:
         list_updated = []
         
         with open('src/database/users.csv', 'r') as file:
           users = file.readlines()
         
           for pos, user in enumerate(users):
-            if int(id) + 1 == pos:
-              updated = f"{','.join(list(new_user.values()))}"
+            if id == pos - 1:
+              print(id)
+              updated = f"{','.join(list(new_user.values()))}\n"
               list_updated.append(updated)
             else:
               list_updated.append(user)
@@ -181,7 +183,7 @@ def update():
       users = file.readlines()
       id = find_id(users)
      
-      create(id, users[1:])
+      create(id, users[id + 1])
       
       break
     except Exception as err:
@@ -226,6 +228,7 @@ def statistics():
       },
     }
     
+    table = PrettyTable()
     table.title = 'ESTATÍSTICAS DOS USUÁRIOS'
     table.field_names = ['Tipo', 'Quantidade']
     

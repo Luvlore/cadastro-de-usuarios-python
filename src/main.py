@@ -110,14 +110,12 @@ while action != '7':
 
         user, bool_value = find_user(users_dict, name)
 
-        if len(user) > 1:
-            print('Edição de múltiplos usuários a ser implementada\n')
-        else:
-            user = user[0]
-
-            if bool_value == False:
-                print('Usuário não existe\n')
+        if user != None:
+            if len(user) > 1:
+                print('Edição de múltiplos usuários a ser implementada\n')
             else:
+                user = user[0]
+
                 print('Digite que item deverá ser atualizado:')
                 key_to_update = input(
                     f'{keys[0]} | {keys[1]} | {keys[2]} | {keys[3]} | {keys[4]} | {keys[5]}:\n'
@@ -142,6 +140,8 @@ while action != '7':
                         print(
                             'Algo deu errado. Tente novamente ou entre em contato com o suporte.\n'
                         )
+        else:
+            print('Usuário não existe\n')
 
         action = input(menu)
 
@@ -152,6 +152,7 @@ while action != '7':
 
         print(f'Total de usuários cadastrados: {users_count}\n')
 
+        print('Usuários por gênero:\n')
         for gender in gender_count_dict:
             print(f'{gender}: {gender_count_dict[gender]}')
         print('\n')

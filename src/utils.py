@@ -125,12 +125,16 @@ def update_user(users_dict, name, key_to_update, updated_value):
 
 def system_statistics(users_dict):
     '''prints a formatted text of the system's statistics'''
+    # get users total
     users_count = len(users_dict)
-    gender = []
 
+    # get genders
+    gender = []
     for user in users_dict:
         gender.append(user['gender'])
 
     gender_count_dict = Counter(gender)
+
+    # get ages
 
     return users_count, gender_count_dict

@@ -3,6 +3,7 @@ data input helper functions in use by the system
 '''
 import re
 import phonenumbers
+import datetime
 
 
 def ask_for_name():
@@ -31,8 +32,13 @@ def ask_for_email():
 
 def ask_for_phone():
     phone = input('\nDigite o telefone(somente números): ')
-    my_number = phonenumbers.parse(phone, 'BR')
-    if not phonenumbers.is_valid_number(my_number):
+    try:
+        my_number = phonenumbers.parse(phone, 'BR')
+
+        if not phonenumbers.is_valid_number(my_number):
+            message = 'Telefone inválido\n'
+            return None, message
+    except Exception:
         message = 'Telefone inválido\n'
         return None, message
 
@@ -50,10 +56,24 @@ def ask_for_cpf():
 
 def ask_for_birth():
     birth = input('\ndata de nascimento(dd/mm/aaaa): ')
+
+    birth_list = birth.split('/')
+    day = int(birth_list[0])
+    month = int(birth_list[1])
+    year = int(birth_list[2])
+
+    date_birth = datetime.date(year, month, day)
+    date_today = datetime.date.today()
+
     if len(birth) < 8 or len(birth.split('/')) == 1:
         message = 'Formato Incorreto. Por favor escreva a data neste formato: dd/mm/aaaa\n'
         return None, message
-
+    elif date_birth > date_today:
+        message = 'Por favor digite uma data anterior à atual.\n'
+        return None, message
+    elif year < 1894:
+        message = 'Por favor digite uma data apòs 1894.\n'
+        return None, message
     return birth, True
 
 

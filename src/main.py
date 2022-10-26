@@ -41,16 +41,31 @@ while action != '7':
     # add a new user
     elif action == '3':
         print('\nDados do novo usuário:\n')
-        name, result = ask_for_name()
-        gender, result = ask_for_gender()
-        email, result = ask_for_email()
-        phone, result = ask_for_phone()
-        cpf, result = ask_for_cpf()
-        birth, result = ask_for_birth()
+        name, message = ask_for_name()
+        while name == None:
+            print(message)
+            name, message = ask_for_name()
+        gender, message = ask_for_gender()
+        email, message = ask_for_email()
+        while email == None:
+            print(message)
+            email, message = ask_for_email()
+        phone, message = ask_for_phone()
+        while phone == None:
+            print(message)
+            phone, message = ask_for_phone()
+        cpf, message = ask_for_cpf()
+        while cpf == None:
+            print(message)
+            cpf, message = ask_for_cpf()
+        birth, message = ask_for_birth()
+        while birth == None:
+            print(message)
+            birth, message = ask_for_birth()
 
         users_dict = csv_to_dict(data_csv)
 
-        if result == True:
+        if message == True:
             bool_value, message, user = add_user(users_dict, name, gender,
                                                  email, phone, cpf, birth)
 
@@ -62,7 +77,7 @@ while action != '7':
                     f"{user['name']} | {user['gender']} | {user['email']} | {user['cpf']} | {user['birth']}\n"
                 )
         else:
-            print(result)
+            print(message)
 
         action = input(menu)
 

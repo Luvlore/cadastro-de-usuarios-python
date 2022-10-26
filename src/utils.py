@@ -3,7 +3,7 @@ crud functions in use by the system
 '''
 from tabulate import tabulate
 import csv
-from helpers import dict_to_csv, find_last_in_csv, csv_to_dict
+from csv_helpers import dict_to_csv, find_last_in_csv, csv_to_dict
 
 
 def print_users(data_csv):
@@ -107,7 +107,7 @@ def update_user(users_dict, name, key_to_update, updated_value):
             csv = 'src/data.csv'
             updated_users_dict = csv_to_dict(csv)
 
-            return updated_users_dict[user_index]
+            return updated_users_dict[user_index], convert_key[key_to_update]
         else:
             return None
 

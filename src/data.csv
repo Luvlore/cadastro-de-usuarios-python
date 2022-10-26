@@ -1,8 +1,8 @@
 name,gender,email,phone,cpf,birth
-fe,male,test@test.com,666666,222,19/07/1986
-manu,female,test@test.com,333333,222,26/08/1985
-helen,female,helen@helen.net,444444,333,222
-ceu,female,ceu@test.test,aaa,aaa,aaa
-lua,female,email@test.com,44444444,3567839034,24/09/2000
-julio,male,test@test.com,11999395543,333,18/10/1993
-marcelo,male,marcelo@test.test,11999556677,35635677765,24/06/2013
+fe,other,test@test.com,11999556677,3567839034,19/07/1986
+ceu,female,test@test.com,11999556677,3567839034,26/08/1985
+helen,female,helen@helen.net,11999556677,3567839034,30/01/1900
+lua,female,email@test.com,11999556677,3567839034,24/09/2000
+leo,male,marcelo@test.test,11999556677,35635677765,24/06/2013
+carlos,outro,test@test.com,11999395543,35635677765,25/04/1939
+julio,male,julio@test.test,11999278835,35635635672,13/04/1500

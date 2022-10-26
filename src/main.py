@@ -2,7 +2,8 @@
 menu do sistema
 '''
 from utils import print_users, find_user, add_user, remove_user, update_user
-from helpers import csv_to_dict, ask_for_name, ask_for_gender, ask_for_email, ask_for_phone, ask_for_cpf, ask_for_birth
+from csv_helpers import csv_to_dict
+from data_input_helpers import ask_for_name, ask_for_gender, ask_for_email, ask_for_phone, ask_for_cpf, ask_for_birth, check_key_before_asking
 
 n1 = '[1]Imprima a lista de usuários\n'
 n2 = '[2]Busque um usuário pelo nome\n'
@@ -31,10 +32,10 @@ while action != '7':
 
         if bool_val is True:
             print(
-                f"{user['name']} | {user['gender']} | {user['email']} | {user['cpf']} | {user['birth']}\n"
+                f"{user['name']} | {user['gender']} | {user['email']} | {user['phone']} |{user['cpf']} | {user['birth']}\n"
             )
         else:
-            print('User not found\n')
+            print('Usuário não existe\n')
         action = input(menu)
 
     # add a new user
@@ -67,7 +68,7 @@ while action != '7':
 
     # remove a user
     elif action == '4':
-        name = input('Digite o nome do usuario que deseja remover: ').lower()
+        name = input('\nDigite o nome do usuario que deseja remover: ').lower()
 
         users_dict = csv_to_dict(data_csv)
         user, message = remove_user(users_dict, name)
@@ -98,16 +99,19 @@ while action != '7':
         else:
             print('Digite que item deverá ser atualizado:')
             key_to_update = input(
-                f'{keys[0]} | {keys[1]} | {keys[2]} | {keys[3]} | {keys[4]} | {keys[5]}(dd/mm/aaaa):\n'
+                f'{keys[0]} | {keys[1]} | {keys[2]} | {keys[3]} | {keys[4]} | {keys[5]}:\n'
             )
 
-            if key_to_update in keys:
-                updated_value = input('\ndigite o novo valor: ')
+            updated_value, message = check_key_before_asking(
+                key_to_update, keys)
 
-                user = update_user(users_dict, name, key_to_update,
-                                   updated_value)
+            if updated_value == None:
+                print(message)
+            elif updated_value != None:
+                user, converted_key = update_user(users_dict, name,
+                                                  key_to_update, updated_value)
 
-                if user:
+                if user[converted_key] == updated_value:
                     print('Usuário foi alterado\n')
                     print(
                         f"{user['name']} | {user['gender']} | {user['email']} | {user['cpf']} | {user['birth']}\n"
@@ -116,8 +120,6 @@ while action != '7':
                     print(
                         'Algo deu errado. Tente novamente ou entre em contato com o suporte.\n'
                     )
-            else:
-                print('Item não existe, ou foi digitado incorretamente.\n')
 
         action = input(menu)
 

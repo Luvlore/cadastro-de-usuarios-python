@@ -107,3 +107,27 @@ def check_key_before_asking(key_to_update, keys):
         return None, '\nItem não existe, ou foi digitado incorretamente.\n'
 
     return updated_value, message
+
+
+def get_ages(users_dict):
+    ages = []
+    date_today = datetime.date.today()
+
+    for user in users_dict:
+        birth_list = user['birth'].split('/')
+        day = int(birth_list[0])
+        month = int(birth_list[1])
+        year = int(birth_list[2])
+
+        date_birth = datetime.date(year, month, day)
+        age = date_today.year - date_birth.year - (
+            (date_today.month, date_today.day) <
+            (date_birth.month, date_birth.day))
+
+        ages.append(age)
+
+    return ages
+
+
+def count_ages(ages):
+    return 'grupos?'

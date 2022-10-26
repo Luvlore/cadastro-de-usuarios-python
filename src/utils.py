@@ -5,6 +5,7 @@ from tabulate import tabulate
 import csv
 from csv_helpers import dict_to_csv, find_last_in_csv, csv_to_dict
 from collections import Counter
+from data_input_helpers import get_ages, count_ages
 
 
 def print_users(data_csv):
@@ -136,5 +137,7 @@ def system_statistics(users_dict):
     gender_count_dict = Counter(gender)
 
     # get ages
+    ages = get_ages(users_dict)
+    count_ages(ages)
 
     return users_count, gender_count_dict

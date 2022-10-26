@@ -86,4 +86,4 @@ def check_key_before_asking(key_to_update, keys):
     else:
         return None, '\nItem não existe, ou foi digitado incorretamente.\n'
 
-        return updated_value, message
+    return updated_value, message

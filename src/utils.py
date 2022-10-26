@@ -22,7 +22,7 @@ def find_user(users_dict, name):
         user_exists = []
 
         for user in users_dict:
-            if name in user['name']:
+            if name == user['name']:
                 user_exists.append(user)
 
         if len(user_exists) == 0:

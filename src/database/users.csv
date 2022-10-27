@@ -1,7 +1,6 @@
 name,gender,email,phone,cpf,birthdate
 Bruna,feminino,brunaluchini@gmail.com,(12) 9 3456-7890,05684503969,22/07/2003
 Lena,outro,lena@gmail.com,(12) 9 3456-7890,12345678900,21/04/1999
-Elena,feminino,elena@gmail.com,(12) 9 3456-7890,12345678900,21/04/1989
 Gabriela,outro,gabriela@email.com,(32) 9 9876-5432,09876543211,11/11/2019
 Amanda,feminino,amanda@email.com,(32) 9 9876-5432,09876543211,11/11/2019
 Joana,outro,joana@email.com,(32) 9 9876-5432,09876543211,11/11/2020
